@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    #command: /usr/sbin/crond
+    command: /usr/bin/python3 /opt/app.py
+    
+    
+    #command: sh -c "/tmp/run.sh"
+    privileged: True
+    
+    restart: on-failure
+    links:
+      - db
+    depends_on:
+      - "db"
+      # db:
+      #   condition: service_healthy
+     
+    # environment:
+    #   WAIT_HOSTS: db:3306
+#    networks:
+ #     - host
+    
+    ports:
+      - "5000:5000"
+#      - "33333:3306"
+    container_name: my-app-container
+  db:
+    
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+   # command: apt update -y && apt upgrade -y
+   # command: apt install curl -y
+
+ #  networks:
+   #   - host
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+#    volumes:
+ #     - ./db:/docker-entrypoint-initdb.d/:ro
+    container_name: my-sql-container
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+
+    # healthcheck:
+    #   test: "exit 0"
+
+      # test: ["CMD", "curl", "-f", "http://localhost:3306"]
+      # interval: 30s
+      # timeout: 10s
+      # retries: 5
+
+#networks:
+ # host:
+  #  name: host
+   # external: true

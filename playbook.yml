@@ -1,0 +1,16 @@
+# This playbook requires privilege escalation to be set. Please
+# refer the ansible.cfg in current working directory for privilege_escalation
+# configuration.
+
+- name : Deploy Task3
+  hosts: all
+  vars:
+   ansible_python_interpreter: /bin/python
+  gather_facts: no
+
+  roles :
+
+   -  role: docker
+      when: inventory_hostname in groups['ilocal']
+   -  role: control
+      when: inventory_hostname in groups['ilocal']

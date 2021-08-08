@@ -1,0 +1,172 @@
+---
+
+- name: creating a docker repository
+  yum_repository:
+         description: repo for docker
+         name: docker-ce
+         baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
+         gpgcheck: No
+- name: installing docker
+  package:
+         name: docker-ce
+         state: present
+
+- name: starting docker services
+  service:
+          name: docker
+          state: started
+
+- name: installing docker SDK
+  command: "pip3 install docker"
+
+- name: installing docker SDK
+  command: "pip3 install selectors"
+
+- name: Install docker-py with pip3
+  pip:
+        name: docker-py
+- name: Install cronie
+  yum:
+    name: cronie
+- name: Install mysql
+  yum:
+    name: mysql
+    
+    
+
+
+    # # - name: Upgrade all packages
+    # #   yum: name=* state=latest
+    # -  name: install python
+    #    yum: name=python-pip state=latest
+    # # -  name: install python3-docker
+    # #    yum: name=python3-docker state=latest
+    # - name: Install PyYAML with pip3
+    #   pip:
+    #     name: PyYAML
+    #     #executable: pip3
+    # - name: Install docker with pip3
+    #   pip:
+    #     name: docker==4.4.4
+    # # - name: Install docker-py with pip3
+    # #   pip:
+    # #     name: docker-py
+    # - name: Install selector with pip3
+    #   pip:
+    #     name: selectors
+    #     executable: pip3
+    # - name: Install ansible with pip3
+    #   pip:
+    #     name: ansible
+        
+    # - name: Check if Docker is installed
+    #   command: systemctl status docker
+    #   register: docker_check
+    #   ignore_errors: yes
+
+    # - name: Download the Docker installer
+    #   get_url:
+    #     url: https://get.docker.com/
+    #     dest: /root/install_docker.sh
+    #     mode: 0700
+    #   when: docker_check.stderr.find('service could not be found') != -1
+
+    # - name: Install Docker
+    #   shell: /root/install_docker.sh
+    #   when: docker_check.stderr.find('service could not be found') != -1
+
+    # - name: Remove the Docker installer file.
+    #   file:
+    #     state: absent
+    #     path: /root/install_docker.sh
+
+    # - name: Enable the Docker daemon in systemd
+    #   systemd:
+    #     name: docker
+    #     enabled: yes
+    #     masked: no
+
+    # - name: Start the Docker daemon
+    #   systemd:
+    #     name: docker
+    #     state: started
+    #     masked: no
+
+    # - name: Check if Docker Compose is installed
+    #   command: docker-compose --version
+    #   register: docker_compose_check
+    #   ignore_errors: yes
+
+    # - name: Download and install Docker Compose
+    #   get_url:
+    #     url: https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Linux-x86_64
+    #     dest: /usr/bin/docker-compose
+    #     mode: 0755
+    #   when:
+    #     - docker_compose_check.msg is defined
+    #     - docker_compose_check.msg.find('No such file or directory') != -1
+
+
+
+
+
+
+
+
+
+    # - name: Install yum utils
+    #   yum:
+    #     name: yum-utils
+    #     state: latest
+
+    # - name: Install device-mapper-persistent-data
+    #   yum:
+    #     name: device-mapper-persistent-data
+    #     state: latest
+
+    # - name: Install lvm2
+    #   yum:
+    #     name: lvm2
+    #     state: latest
+
+    # - name: Add Docker repo
+    #   get_url:
+    #     url: https://download.docker.com/linux/centos/docker-ce.repo
+    #     dest: /etc/yum.repos.d/docer-ce.repo
+    #   become: yes
+
+    # - name: Enable Docker Edge repo
+    #   ini_file:
+    #     dest: /etc/yum.repos.d/docer-ce.repo
+    #     section: 'docker-ce-edge'
+    #     option: enabled
+    #     value: 0
+    #   become: yes
+
+    # - name: Enable Docker Test repo
+    #   ini_file:
+    #     dest: /etc/yum.repos.d/docer-ce.repo
+    #     section: 'docker-ce-test'
+    #     option: enabled
+    #     value: 0
+    #   become: yes
+
+    # - name: Install Docker
+    #   package:
+    #     name: docker-ce
+    #     state: latest
+    #   become: yes
+
+    # - name: Start Docker service
+    #   service:
+    #     name: docker
+    #     state: started
+    #     enabled: yes
+    #   become: yes
+
+    # - name: Add user vagrant to docker group
+    #   user:
+    #     name: vagrant
+    #     groups: docker
+    #     append: yes
+    #   become: yes
