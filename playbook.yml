@@ -9,8 +9,6 @@
   gather_facts: no
 
   roles :
-
    -  role: docker_init
-      when: inventory_hostname in groups['localhost']
    -  role: control
-      when: inventory_hostname in groups['localhost']
+      

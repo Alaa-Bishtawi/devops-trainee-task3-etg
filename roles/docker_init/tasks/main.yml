@@ -23,5 +23,4 @@
     name:
       - mysql
       - cronie
-      - python3
     state: present
