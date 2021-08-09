@@ -1,0 +1,27 @@
+- name: creating a docker repository
+  yum_repository:
+    description: repo for docker
+    name: docker-ce
+    baseurl: 'https://download.docker.com/linux/centos/7/x86_64/stable/'
+    gpgcheck: 'No'
+- name: installing docker
+  package:
+    name: docker-ce
+    state: present
+- name: starting docker services
+  service:
+    name: docker
+    state: started
+- name: Download and install Docker Compose
+  get_url:
+    url: >-
+      https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Linux-x86_64
+    dest: /usr/bin/docker-compose
+    mode: 0755
+- name: Install a list of packages
+  yum:
+    name:
+      - mysql
+      - cronie
+      - python3
+    state: present

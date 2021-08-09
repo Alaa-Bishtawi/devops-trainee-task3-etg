@@ -10,7 +10,7 @@
 
   roles :
 
-   -  role: docker
-      when: inventory_hostname in groups['ilocal']
+   -  role: docker_init
+      when: inventory_hostname in groups['localhost']
    -  role: control
-      when: inventory_hostname in groups['ilocal']
+      when: inventory_hostname in groups['localhost']

@@ -1,41 +1,11 @@
 FROM centos:7
-
-
 RUN yum install -y python3 
 RUN yum install -y gcc python3-devel
-#RUN yum -y install systemd
-#RUN yum clean all
-#COPY ./requirements.txt /app/requirements.txt
 COPY ./requirements.txt /opt/requirements.txt
 COPY ./main.py /opt/main.py
-
 COPY ./metricsRetrival.py /opt/metricsRetrival.py
-
 RUN pip3 install -r /opt/requirements.txt
 EXPOSE 5000 3306
-# ENTRYPOINT ["/usr/bin/python3"]
-# CMD /opt/app.py
-#RUN touch /var/log/cron.log
-#RUN touch /opt/test
-#COPY ./auto.py /opt/auto.py
-#COPY ./auto_cron.py /opt/auto_cron.py
-
-#COPY ./script.sh /opt/script.sh
-#RUN chmod +x ./opt/script.sh
+ENTRYPOINT ["/usr/bin/python3","/opt/main.py"]
 
 
-
-#RUN yum -y update && yum -y install cronie crontabs
-
-# Copy hello-cron file to the cron.d directory
-#COPY cronjob /etc/cron.d/cronjob
- 
-# Give execution rights on the cron job
-#RUN chmod 0640 /etc/cron.d/cronjob
-
-# Apply cron job
-#RUN crontab /etc/cron.d/cronjob
- 
-# Create the log file to be able to run tail
-#RUN touch /var/log/cron.log
-#CMD sleep 2 && crond

@@ -1,11 +1,9 @@
 from flask import Flask
-import psutil # pip install psutil
-import os.path
 import metricsRetrival as metrics
 import logging
 from datetime import date
 
-logging.basicConfig(filename='test.log',level=logging.DEBUG)
+logging.basicConfig(filename='severlog.log',level=logging.DEBUG)
 
 app = Flask(__name__)
 
@@ -21,10 +19,10 @@ logMessage = {
     'ram_day_usage':'ram day uasge is : {}',
 }
 
-# default
+
 @app.route('/log')
 def log_world():
-    f = open("test.log", "r")
+    f = open("severlog.log", "r")
     logfile = f.read()
     return logfile
 

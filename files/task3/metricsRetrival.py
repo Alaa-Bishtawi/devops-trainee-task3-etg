@@ -1,5 +1,5 @@
-import mysql.connector  #pip install mysql-connector-python
-import logging
+import mysql.connector 
+
 def dbSetup():
     
         mydb = mysql.connector.connect(
@@ -13,18 +13,14 @@ def dbSetup():
             
         return mydb
 
-def dbRetriveDay(usage_type,mydb):
-    NO_OF_RETRIVED_DATA=24
-    query='SELECT time,{} FROM dataa'
+def dbRetrive(usage_type,mydb,NO_OF_RETRIVED_DATA):
+    query='SELECT time,{} FROM dataa ORDER BY time DESC;'
     currentCursor=mydb.cursor()
     currentCursor.execute(query.format(usage_type))
-    return currentCursor.fetchmany(NO_OF_RETRIVED_DATA)
-
-def dbRetriveCurrent(usage_type,mydb):
-    query='SELECT time,{} FROM dataa'
-    currentCursor=mydb.cursor()
-    currentCursor.execute(query.format(usage_type))
-    return currentCursor.fetchall(),currentCursor.rowcount
+    if NO_OF_RETRIVED_DATA==0:
+        return currentCursor.fetchmany(NO_OF_RETRIVED_DATA)
+    else:   
+        return currentCursor.fetchmany(NO_OF_RETRIVED_DATA)
 
 def formatStrDay(usageTypeString,usageList):
     usageStr="Time : {},\t {} usage : {} \n"
@@ -32,17 +28,11 @@ def formatStrDay(usageTypeString,usageList):
     for usage in usageList:
         usageListStr=usageListStr + usageStr.format(usage[0],usageTypeString,usage[1])
     return usageListStr
-def formatStrCurrent(usageTypeString,usageList,rc):
-    LAST_ROW=-1
-    usageStr="Time : {},\t {} usage : {} \n"
-    j=0
-    usageCurrentStr= ''
-    for x in usageList:
-        if j<=rc:
-            usageCurrentStr= usageStr.format(x[0],usageTypeString,x[1])
-        else:
-            continue
-    
+def formatStrCurrent(usageTypeString,usageList):
+    usageCurrentStr=''
+    for usage in usageList:
+        usageStr="Time : {},\t {} usage : {} \n"
+        usageCurrentStr= usageStr.format(usage[0],usageTypeString,usage[1])
     return usageCurrentStr
 
 def retrive(usageType,usageTypeString,mode):
@@ -50,15 +40,11 @@ def retrive(usageType,usageTypeString,mode):
     usageList=''
     formatedUsage= ''
     if mode == 'day':
-        usageList=dbRetriveDay(usageType,mydb)
+        usageList=dbRetrive(usageType,mydb,24)
         formatedUsage=formatStrDay(usageTypeString,usageList)
     elif mode == 'current' :
-        
-        usageList,rc=dbRetriveCurrent(usageType,mydb)
-        
-        formatedUsage=formatStrCurrent(usageTypeString,usageList,rc)
-    
-    
+         usageList=dbRetrive(usageType,mydb,1)
+         formatedUsage=formatStrCurrent(usageTypeString,usageList)
     mydb.close()
     return formatedUsage
 

@@ -1,69 +1,13 @@
----
-
-
-  - name: Ansible copy directory to the remote server
-    copy:
-      src: ./files/task3
-      dest: /opt/
-      mode: '755'
-
-  - name: 'Ensure an old job is no longer present. Removes any job that is prefixed by "#Ansible: an old job" from the crontab'
-    cron:
-        name: "an old job"
-        state: absent
-
-  - name: Creates a cron file under /etc/cron.d
-    cron:
-    
-     
-     
-     job: "/opt/task3/auto.sh"
-    
-    
-    
-  - name: Change the working directory to somedir/ before executing the command
-    # shell: docker-compose up  &> /opt/dockerlog.text
-    shell: docker-compose up  -d
-    args:
-      chdir: /opt/task3
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  # - name: Create directory
-#   file:
-
-#     path: /opt/ansible_folder
-#     state: directory
-# - name: coppying files
-#   copy:
-#     src: "{{ item }}"
-#     dest: /etc/fooapp/
-#     owner: root
-#     mode: 600
-#   with_fileglob:
-#     - ./files/*
-
-  # - name: Create and start services
-  #   community.docker.docker_compose:
-  #       project_src: /opt/task3
-  #   register: output
-  
+- name: Ansible copy directory to the remote server
+  copy:
+    src: ./files/task3
+    dest: /opt/
+    mode: '755'
+- name: Creates a cron file under /etc/cron.d
+  cron:
+    job: /opt/task3/collect_data.sh
+    hour: '1'
+- name: Change the working directory to somedir/ before executing the command
+  shell: docker-compose up  -d && sleep 30 && /usr/bin/bash /opt/task3/collect_data.sh
+  args:
+    chdir: /opt/task3
