@@ -1,18 +1,5 @@
 ---
 
-# - name: Create directory
-#   file:
-
-#     path: /opt/ansible_folder
-#     state: directory
-# - name: coppying files
-#   copy:
-#     src: "{{ item }}"
-#     dest: /etc/fooapp/
-#     owner: root
-#     mode: 600
-#   with_fileglob:
-#     - ./files/*
 
   - name: Ansible copy directory to the remote server
     copy:
@@ -35,9 +22,46 @@
     
     
   - name: Change the working directory to somedir/ before executing the command
-    shell: docker-compose up -d 
+    # shell: docker-compose up  &> /opt/dockerlog.text
+    shell: docker-compose up  -d
     args:
       chdir: /opt/task3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # - name: Create directory
+#   file:
+
+#     path: /opt/ansible_folder
+#     state: directory
+# - name: coppying files
+#   copy:
+#     src: "{{ item }}"
+#     dest: /etc/fooapp/
+#     owner: root
+#     mode: 600
+#   with_fileglob:
+#     - ./files/*
+
   # - name: Create and start services
   #   community.docker.docker_compose:
   #       project_src: /opt/task3

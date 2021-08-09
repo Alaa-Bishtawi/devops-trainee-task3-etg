@@ -7,9 +7,9 @@ RUN yum install -y gcc python3-devel
 #RUN yum clean all
 #COPY ./requirements.txt /app/requirements.txt
 COPY ./requirements.txt /opt/requirements.txt
-COPY ./hello.py /opt/app.py
+COPY ./main.py /opt/main.py
 
-COPY ./test2.py /opt/test2.py
+COPY ./metricsRetrival.py /opt/metricsRetrival.py
 
 RUN pip3 install -r /opt/requirements.txt
 EXPOSE 5000 3306
