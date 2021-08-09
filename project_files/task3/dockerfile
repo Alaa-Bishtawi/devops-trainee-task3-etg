@@ -1,0 +1,11 @@
+FROM centos:7
+RUN yum install -y python3 
+RUN yum install -y gcc python3-devel
+COPY ./requirements.txt /opt/requirements.txt
+COPY ./main.py /opt/main.py
+COPY ./metricsRetrival.py /opt/metricsRetrival.py
+RUN pip3 install -r /opt/requirements.txt
+EXPOSE 5000 3306
+ENTRYPOINT ["/usr/bin/python3","/opt/main.py"]
+
+

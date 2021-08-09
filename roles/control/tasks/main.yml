@@ -1,6 +1,6 @@
 - name: Ansible copy directory to the remote server
   copy:
-    src: ./files/task3
+    src: ./project_files/task3
     dest: /opt/
     mode: '755'
 - name: Creates a cron file under /etc/cron.d
